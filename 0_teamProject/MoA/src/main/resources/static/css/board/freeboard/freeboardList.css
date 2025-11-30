@@ -1,0 +1,265 @@
+/* 전체 공통 초기화 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 자유게시판 헤더 영역 */
+.free-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.free1 {
+  padding: 20px;
+  border-left: 5px solid #27374D;
+}
+
+.free-container .title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #27374D;
+  margin-bottom: 5px;
+}
+
+.free-container .subtitle {
+  font-size: 14px;
+  color: #555;
+}
+
+/* 게시글 카드 영역 (그리드 3열) */
+section.free-category {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3열 */
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* 카드 하나 */
+.card1 {
+  /* width: calc(50% - 20px); ❌ 이거 주석 처리하거나 삭제 */
+  /* min-width: 350px; */
+  /* 이건 유지 가능 (최소 카드 크기) */
+  height: 160px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  display: flex;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.card1:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 카드 이미지 */
+.card1 img {
+  width: 120px;
+  height: 120px;
+  margin: 20px 15px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-top: 30px;
+}
+
+
+/* 카드 텍스트 부분 */
+.card1-content {
+  flex: 1;
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* 위쪽 정렬 */
+  gap: 8px;
+  overflow: hidden;
+  /* 텍스트 잘림 방지 */
+  margin-top: 40px;
+}
+
+/* 제목 (한 줄만, 넘치면 ...) */
+.card1-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #27374D;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4em;
+  max-width: 100%;
+}
+
+.card1 {
+  height: 180px;
+  /* 기존 160px보다 조금 여유 있게 */
+}
+
+
+/* 내용 (두 줄까지만, 넘치면 ...) */
+.card1-text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* 최대 2줄 */
+  -webkit-box-orient: vertical;
+  max-height: 3em;
+  /* 1.5em * 2줄 = 3em */
+}
+
+
+.card1-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #27374D;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card1-text {
+  font-size: 14px;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.card1-title-link {
+  text-decoration: none;
+  color: black;
+}
+
+/* 글쓰기 버튼 */
+.free-write {
+  display: inline-block;
+  margin-right: 200px;
+  padding: 10px 25px;
+  background-color: #27374D;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+  float: right;
+}
+
+.free-write:hover {
+  background-color: #1b2735;
+}
+
+.pagination {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin-top: 50px;
+}
+
+.pagination li {
+  width: 20px;
+  margin: 0 5px;
+  text-align: center;
+}
+
+.pagination a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* ========== 이미지 모달 ========== */
+.modal {
+  display: none;
+  /* 기본 숨김 */
+  position: fixed;
+  z-index: 9999;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  /* 스크롤 가능 */
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* 모달 이미지 */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #000;
+}
+
+/* 캡션 텍스트 */
+#caption {
+  margin: 15px auto;
+  text-align: center;
+  color: #f1f1f1;
+  font-size: 18px;
+}
+
+/* 닫기 버튼 */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #bbb;
+}
+
+.modal-content {
+  animation: zoom 0.3s ease;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0.5);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+
+
+/* footer */
+footer {
+  margin-top: 50px;
+  padding: 20px 0;
+  background: #f7f7f7;
+  color: #555;
+  font-size: 13px;
+  text-align: center;
+}
+
+body {
+  background-color: white !important;
+}

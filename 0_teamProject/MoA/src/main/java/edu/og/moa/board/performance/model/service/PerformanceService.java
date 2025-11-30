@@ -1,0 +1,35 @@
+package edu.og.moa.board.performance.model.service;
+
+import java.util.List;
+import java.util.Map;
+
+import edu.og.moa.board.performance.model.dto.PerformanceBoard;
+import edu.og.moa.board.performance.model.dto.PerformanceBoardImage;
+
+public interface PerformanceService {
+
+	// 공연 장르별 목록 조회
+	Map<String, Object> selectPmTypeList(String type, int cp);
+
+	// 상세 페이지
+	PerformanceBoard selectPmDetail(Map<String, Object> map);
+
+	// 좋아요 여부
+	int boardLikeCheck(Map<String, Object> map);
+
+	// 조회수 증가 서비스
+	int updateReadCount(int boardNo);
+
+	// 좋아요 처리
+	int like(Map<String, Integer> paramMap);
+
+    // 공연 썸네일 목록 조회 (KSY)
+	List<PerformanceBoardImage> selectPerformanceList();
+
+	// 공연 상세검색 목록 조회
+	Map<String, Object> selectPmSearchList(List<String> type, List<String> price, List<String> date,
+			List<String> address, List<String> query, int cp);
+	
+	
+	
+}

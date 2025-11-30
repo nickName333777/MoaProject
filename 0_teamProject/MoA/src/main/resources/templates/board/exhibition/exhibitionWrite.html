@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.thymeleaf.org"> 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${exhibitionName}">게시판 이름</title>
+
+    <link rel="stylesheet" th:href="@{/css/board/exhibition/exhibitionWrite-style.css}">
+    <link rel="stylesheet" th:href="@{/css/main-style.css}">
+
+    <!-- 좋아요 heart? -->
+    <!-- <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script> -->
+    <!-- notification -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />    
+</head>
+<body>
+
+    <!-- <div th:replace="common/header :: header"></div>  -->
+    <th:block th:replace="~{/common/header}">header.html</th:block>
+    <div id="page-wrapper">
+
+        <main>
+            <!-- 본문: -->
+            <div class="content-wrapper"> 
+                <!-- 본문 상단 영역 -->
+                <div class="content-top">
+                    <div class="content-top-container"></div>
+                </div>
+
+                <form th:action="@{insert}" method="POST" class="board-write" 
+                    enctype="multipart/form-data" id="boardWriteFrm">  
+
+                    <!-- 본문 중앙 영역 -->
+                    <div class="content-middle" id="contentMiddleWrapper">
+                        <!-- 본문 중앙-Center: 실제 모든 내용 여기에 -->
+                        <div class="content-middle-container" th:unless="${exhibition}">                                                
+                            <div class="section-container left"   id="sectionContainerLeft">
+                                <div class="section-container-left top">
+                                    <div class="placeholder section-container-lef-top">hidden placeholder</div>
+                                </div>
+
+                                <section class="section left">
+                                    <div class="sec-left-div1 exhibition-image bg-color">
+                                        <!-- 전시의 경우, thumbnail을 placeholder로 지정해놓았음. 
+                                        실제 default/포스터(있는경우)는 imageList에 path + originalName으로 들어가있음 -->
+                                        <div class="image-wrapper bg-color">                                            
+                                            <!-- 이미지가 있을 경우: 우선 thumbnail이미지가 있는 경우 => 전시의 경우는 이거 무시 -->
+                                            <th:block th:unless="${exhibition}">
+                                                <th:block th:unless="${thumbnail}">
+                                                    <h3 class="required">전시포스터</h3>
+                                                    <div class="img-box">
+                                                        <div class="exhibitionImg thumbnail">                                                            
+                                                            <span class="delete-image">&times;</span>
+                                                            <label for="img0">
+                                                                <img class="preview" src="">
+                                                            </label>
+                                                            <input type="file" name="images" class="inputImage" id="img0" accept="image/*">
+
+                                                        </div>
+                                                    </div>
+                            
+                                                </th:block>
+                                
+                                            </th:block>
+                                
+                                            <!-- 업로드 이미지가 있는 경우: exhibition의 경우 not used -->
+                                            <!-- 썸네일 없는 경우 -->
+                                            <th:block th:unless="${exhibition}"> 
+                                                    <th:block th:if="${start == 0}"></th:block>
+                                                        <!-- 업로드 이미지 영역:전시경우 포스터하나있어 img0채워져있음 -->
+                                                        <div class="img-box">
+                                                        </div>
+                                                    </th:block>
+                                            </th:block>
+                                        </div>
+                                    </div>
+
+                                    <!-- 내용 -->
+                                    <div class="sec-left-div2 exhibition-description bg-color" >
+                                        <div class="exhibition-description-title required bg-color">전시설명</div>
+                                        <div class="exhibition-description-text-wrapper bg-color">
+                                            <textarea name="exhibitContent" rows="20" cols="70" id="exhibitContent" 
+                                                placeholder="전시설명을 입력해 주세요" ></textarea>
+                                        </div>
+                                    </div>
+                                </section>
+                                
+                            </div>                             
+
+                            <div class="section-container right" id="sectionContainerRight">
+                                <div class="section-container-right top">
+                                    <span class="exhibition-detail-required-input">
+                                        (<span class="required-star">*</span><span>필수</span> )
+                                    </span>       
+                                </div>
+                                <section class="section right">
+                                    <div class="sec-right-div1 exhibition-lines bg-color">
+                                        <!-- 제목: 필수 -->
+                                        <div class="exhibition-title" >
+                                            <label for="exhibitTitle" class="required">전시 제목</label>
+                                            <input type="text" name="exhibitTitle" id="exhibitTitle" class="input-text-size"
+                                                placeholder="제목을 입력해주세요" th:value="*{exhibitTitle}">
+                                        </div>
+                                        <!-- 전시부제목 -->
+                                        <div class="exhibition-subtitle">
+                                            <label for="exhibitSubTitle" class="not-required">전시 부제목</label>
+                                            <input type="text" name="exhibitSubTitle" id="exhibitSubTitle" class="input-text-size"
+                                                placeholder="부제목을 입력해주세요" th:value="*{exhibitSubTitle}">
+                                        </div>
+
+                                        <!-- 전시기관명: 필수 -->
+                                        <div class="exhibition-info institution">
+                                            <label for="exhibitInstitution" class="required">전시 기관</label>
+                                            <input type="text" name="exhibitInstitution" id="exhibitInstitution" class="input-text-size"
+                                                style="height: 35px; width: 300px"  
+                                                placeholder="작성예: 예술의 전당" th:value="*{exhibitInstitution}">
+                                        </div>
+                                        <!-- 장소 -->
+                                        <div class="exhibition-info location">
+                                            <label for="exhibitLocation" class="not-required">전시 장소</label>
+                                            <input type="text" name="exhibitLocation" id="exhibitLocation" class="input-text-size"
+                                                style="height: 35px; width: 320px" 
+                                                placeholder="작성예: 제2전시실" th:value="*{exhibitLocation}">
+                                        </div>
+
+
+                                        <!-- 전시기간: 필수 -->
+                                        <div class="exhibition-info date">
+                                            <label for="exhibitDate" class="required">전시 기간</label>
+                                            <input type="text" name="exhibitDate" id="exhibitDate" class="input-text-size"
+                                                style="height: 35px; width: 320px"
+                                                placeholder="작성예) 2025-09-19 ~ 2025-10-19" th:value="*{exhibitDate}">
+                                        </div>
+                                        <!-- 장르 -->
+                                        <div class="exhibition-info genre">
+                                            <label for="exhibitGenre" class="not-required">장르</label>
+                                            <input type="text" name="exhibitGenre" id="exhibitGenre" class="input-text-size"
+                                                style="height: 35px; width: 320px"
+                                                placeholder="작성예)미디어 아트" th:value="*{exhibitGenre}">
+                                        </div>
+                                        <!-- 참여작가:필수 -->
+                                        <div class="exhibition-info author">
+                                            <label for="exhibitAuthor" class="required">참여 작가</label>
+                                            <input type="text" name="exhibitAuthor" id="exhibitAuthor" class="input-text-size"
+                                                style="height: 35px; width: 320px"
+                                                placeholder="복수작가 쉼표구분: 예) 김이박, 이박김, 박김이" th:value="*{exhibitAuthor}">
+                                        </div>
+                                        <!-- 주최후원 -->
+                                        <div class="exhibition-info contributor">
+                                            <label for="exhibitContributor" class="not-required">주최/후원</label>
+                                            <input type="text" name="exhibitContributor" id="exhibitContributor" class="input-text-size"
+                                                style="height: 35px; width: 330px" 
+                                                placeholder="작성예) 서울특별시 종로구청 주최 / 삼성전자 후원" th:value="*{exhibitContributor}">
+        
+                                        </div>
+                                        <!-- 문의: 필수 -->
+                                        <div class="exhibition-info contact">
+                                            <label for="exhibitContact" class="required">문의</label>
+                                            <input type="text" name="exhibitContact" id="exhibitContact" class="input-text-size"
+                                                style="height: 35px; width: 320px"
+                                                placeholder="전화번호: 예) 010-3333-7777" th:value="*{exhibitContact}">
+
+                                        </div>
+                                        <!-- 대상연령 -->
+                                        <div class="exhibition-info audience">
+                                            <label for="exhibitAudience" class="not-required">대상 연령</label>
+                                            <input type="text" name="exhibitAudience" id="exhibitAudience" class="input-text-size"
+                                                style="height: 35px; width: 320px"
+                                                placeholder="예) 0세 이상" th:value="*{exhibitAudience}">
+
+                                        </div>
+                                        <!-- 입장료 -->
+                                        <div class="exhibition-info charge">
+                                            <label for="exhibitCharge" class="not-required">입장료(원)</label>
+                                            <input type="text" name="exhibitCharge" id="exhibitCharge" class="input-text-size"
+                                                style="height: 35px; width: 360px"
+                                                placeholder="숫자입력, 예) 0원/무료 -> 0, 만원-> 10000" th:value="*{exhibitCharge}">
+                                            <!-- <div>원</div> -->
+
+                                        </div>
+
+                                    </div>
+                                    <div class="sec-right-div3 exhibition-placeholder bg-color">
+                                        <div class="placeholder-area1">placeholder1</div>
+                                        <div class="placeholder-area2">placeholder2</div>
+                                    </div>
+                                </section>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <!-- 본문 하단 영역 -->
+                    <div class="content-bottom">
+                        <div class="content-bottom-btn-wrapper">   
+                            <th:block th:if="${session.loginMember?.memberNo}">
+                                <div class="exhibition-detail-btn-insertComplete">
+                                    <button type="submit">등록</button>
+                                </div>
+                                <div class="exhibition-detail-btn-insertCancel">
+                                    <button type="button" id="insertCancelBtn">취소</button>
+                                </div>    
+                            </th:block>
+                            
+                        </div>
+    
+                        <div class="content-bottom-section-wrapper">
+                            <section class="section-bottom">
+                                <div class="section-bottom-div1">test</div>
+                            </section>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>    
+        </main>
+
+    </div>
+
+    <!-- footer.html 추가 -->
+    <!-- <div th:replace="common/footer :: footer"></div> -->
+    <th:block th:replace="~{common/footer}">footer.html</th:block>
+
+    <script th:inline="javascript"> // 전역 변수들
+        console.log("test...");
+
+        const loginMemberNo = /*[[${session.loginMember.memberNo}] ]*/ "로그인한 회원 번호"; // 
+        const memberNickname = /*[[${session.loginMember.memberNickname}] ]*/ "로그인한 회원 닉네임"; // 로그인 했을 경우 (로그인 안했으면 Null로 되어 빈문자열 )
+
+        if(loginMemberNo == null) loginMemberNo = ""; // 로그인 안했을 경우; 들어가는 값이 없으면 대신 빈칸
+
+        const communityCode =  /*[[${communityCode}]]*/ "게시글 코드"; // exhibitionWrite.js에서 사용
+        
+    </script>>
+
+
+    <!-- confirm-alert-message window 창: footer.html에서 이미 declared 됐음 -->
+    <!-- <script th:inline="javascript">
+        const message = /*[[${message}]]*/ "전달 받은 message";
+
+        console.log(message)
+
+        if (message != null) alert(message);
+
+    </script> -->
+
+    <!-- 우측 상단 로그인 멤버 정보/ Notification 표시 -->
+    <script th:src="@{/js/main.js}"></script>
+    <!-- 로그인 정보 JS 변수 (모든 페이지에서 공통으로 렌더링됨): header.html에서 이미 declared 됐음 -->
+    <!-- <script th:inline="javascript">
+        const notificationLoginCheck = /*[[${session.loginMember} ? true : false]]*/ false;
+        const notificationDefaultImage = /*[[@{/images/common/user.svg}]]*/ "/images/common/user.svg";
+    </script> -->
+
+
+    <script th:src="@{/js/board/exhibition/exhibitionWrite.js}"></script>
+
+</body>
+</html>

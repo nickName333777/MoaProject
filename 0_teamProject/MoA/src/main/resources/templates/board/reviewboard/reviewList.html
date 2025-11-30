@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>리뷰게시판</title>
+  <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+  <link th:href="@{/css/board/reviewboard/reviewList.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+
+</head>
+
+<body>
+  <th:block th:replace="~{/common/header}"></th:block>
+
+  <main th:with="pagination=${map.pagination}, boardList=${map.boardList}">
+    <section class="review-section">
+      <div class="review-header">
+        <h2>리뷰게시판</h2>
+        <button class="write-btn"
+          th:onclick="|location.href='@{/reviewboard/write/{boardCode}(boardCode=${boardCode})}'|">
+          글 작성
+        </button>
+      </div>
+
+      <table class="review-table">
+        <thead>
+          <tr>
+            <th>이미지</th>
+            <th>구분</th>
+            <th>내용</th>
+            <th>평가</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 등록된 리뷰가 없는 경우 -->
+          <tr th:if="${#lists.size(boardList) == 0}">
+            <td colspan="4" style="text-align:center; padding:30px;">등록된 리뷰가 없습니다.</td>
+          </tr>
+
+          <!-- 리뷰 목록 반복 출력 -->
+          <tr th:each="board : ${boardList}" class="review-row"
+            th:onclick="|location.href='@{/reviewboard/{code}/{no}(code=${board.communityCode}, no=${board.boardNo}, cp=${pagination.currentPage})}'|">
+            <td>
+              <img th:if="${board.thumbnailPath}" th:src="${board.thumbnailPath}" alt="리뷰 이미지" class="thumb-img" />
+              <img th:unless="${board.thumbnailPath}" th:src="@{/images/default-thumb.jpg}" alt="기본 이미지"
+                class="thumb-img" />
+            </td>
+            <td th:text="${board.categoryName}">전시</td>
+            <td th:text="${board.boardContent}">리뷰 내용</td>
+            <td>
+              <span class="stars" th:text="${'★'.repeat(board.star)} + ${'☆'.repeat(5 - board.star)}">
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 페이지네이션 -->
+      <div th:if="${#lists.size(boardList) > 0}" class="pagination-area">
+        <ul class="pagination">
+          <!-- 처음으로 -->
+          <li><a th:href="@{/reviewboard/{code}(code=${boardCode}, cp=1)}">&lt;&lt;</a></li>
+
+          <!-- 이전 페이지 -->
+          <li><a th:href="@{/reviewboard/{code}(code=${boardCode}, cp=${pagination.prevPage})}">&lt;</a></li>
+
+          <!-- 페이지 번호 -->
+          <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage, 1)}">
+            <li th:if="${pagination.currentPage == i}">
+              <a class="current" th:text="${i}">현재</a>
+            </li>
+            <li th:unless="${pagination.currentPage == i}">
+              <a th:href="@{/reviewboard/{code}(code=${boardCode}, cp=${i})}" th:text="${i}">페이지</a>
+            </li>
+          </th:block>
+
+          <!-- 다음 페이지 -->
+          <li><a th:href="@{/reviewboard/{code}(code=${boardCode}, cp=${pagination.nextPage})}">&gt;</a></li>
+
+          <!-- 마지막 페이지 -->
+          <li><a th:href="@{/reviewboard/{code}(code=${boardCode}, cp=${pagination.maxPage})}">&gt;&gt;</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <div th:replace="common/footer :: footer"></div>
+</body>
+
+</html>

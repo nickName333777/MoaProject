@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${communityName}+'챗봇방'">챗봇 문의 관지자 방</title>
+    
+    <link rel="stylesheet" th:href="@{/css/chatbot/chatbotManager-style.css}">
+    <link rel="stylesheet" th:href="@{/css/main-style.css}">
+
+    <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
+    <!-- 좋아요 heart? -->
+    <!-- <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script> -->
+    <!-- notification -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+</head>
+<body>
+
+    <!-- 전체를 감싸는 태그 -->
+    <div class="page-wrapper">
+        <main>
+
+            <!-- 헤더 -->
+            <!-- <header class="main-header">header</header> -->
+            <!-- <div th:replace="common/header :: header"></div> -->
+            <th:block th:replace="~{common/header}"></th:block>    
+            
+            <!-- 네비게이션 -->
+            <!-- <nav class="main-nav"></nav> -->
+    
+            <!-- 본문 -->
+            <div class="content-wrapper">
+
+            <!-- ######################################################################################## -->
+            <!-- ######################################################################################## -->
+
+                <div class="top-chatting-area">
+                    <button id="addTarget">추가</button>
+                    <label for="changeTheme">테마변경</label>
+                    <input type="checkbox" id="changeTheme">
+                    <!-- 다크/라잇 모드 -->
+    
+                    <!-- ${loginMember} -->
+                    <!-- ${roomList} -->
+    
+                    <div id="addTargetPopupLayer" class="popup-layer-close">  
+                        <span id="closeBtn">&times</span>
+    
+    
+                        <div class="target-input-area">
+                            <input type="search" id="targetInput" placeholder="닉네임 또는 이메일을 입력하세요" autocomplete="off">
+                        </div>
+    
+    
+                        <ul id="resultArea">
+                            <!-- <li class="result-row" data-id="1">
+                                <img class="result-row-img" src="/images/user.png">
+                                <span> <mark>유저</mark>일</span>
+                            </li>
+                            <li class="result-row"  data-id="2">
+                                <img class="result-row-img" src="/images/user.png">
+                                <span><mark>유저</mark>이</span>
+                            </li> -->
+    
+    
+                            <li class="result-row">일치하는 회원이 없습니다</li>
+                        </ul>
+                    </div>
+                </div>    
+        
+                <div class="chatting-area">
+                    <ul class="chatting-list">
+
+                        <th:block th:each="room : ${roomList}" >
+                        <!-- chat-no, target-no: 우리가 만든 속성으로 th:필요 -->
+                            <!-- <li class="chatting-item" chat-no="${room.chattingNo}" target-no="${room.targetNo}"> -->
+                            <li class="chatting-item" th:chat-no="${room.chattingNo}" th:target-no="${room.targetNo}">
+                                <div class="item-header">
+                                    <!-- 프로필 없을 경우 -->
+                                    <img th:unless="${room.targetProfile}" class="list-profile" th:src="@{/images/user.png}">
+                                    <!-- 프로필 있을 경우 -->
+                                    <img th:if="${room.targetProfile}" class="list-profile" th:src="${room.targetProfile}">
+
+                                </div>
+                                <div class="item-body">
+                                    <p>
+                                        <!-- <span class="target-name">유저일</span> -->
+                                        <!-- <span class="target-name" th:text="${room.targetNickName}">상대방이름</span> -->
+                                        <span class="target-name">[[${room.targetNickName}+' (chatNo='+${room.chattingNo}+')']]</span>
+                                        <!-- <span class="recent-send-time">2025.02.26</span> -->
+                                        <span class="recent-send-time">[[${room.sendTime}]]</span>
+                                    </p>
+                                    <div>
+                                        <!-- <p class="recent-message">마지막 채팅 내용</p> -->
+                                        <p class="recent-message" th:text="${room.lastMessage}">메시지 내용</p>
+                                        
+                                        <!-- <p class="not-read-count">2</p> -->
+                                            <p th:if="${room.notReadCount > 0}" class="not-read-count">[[${room.notReadCount}]]</p>
+                                    </div>
+                                </div>
+                            </li>
+
+
+                        </th:block>
+                    </ul>
+
+
+                    <div class="chatting-content">
+                        <ul class="display-chatting">
+                            <!-- 샘플 화면 
+                                <li class="my-chat">
+                                <span class="chatDate">12:11</span>
+                                <p class="chat">오늘 수업 어땠어?</p>
+                            </li>
+
+
+                            <li class="target-chat">
+                                <img src="/images/user.png">
+
+
+                                <div>
+                                    <b>유저이</b>  <br>
+                                    <p class="chat">채팅 배웠는데 너무 재밌어!<br>혜선쌤 강의는 최고야! 짜릿해~</p>
+                                    <span class="chatDate">14:05</span>
+                                </div>
+                            </li> -->
+                        </ul>  
+                
+                        <div class="input-area">
+                            <!-- <textarea id="inputChatting" rows="3">내일도 지각하지 않고 수업들으러 와야지^^!</textarea> -->
+                            <textarea id="inputChatting" rows="3"></textarea>
+                            <button id="send">보내기</button>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- ######################################################################################## -->
+            <!-- ######################################################################################## -->
+            </div>
+
+        </main>
+        
+        <!-- ######################################################## -->
+        <!-- 푸터 -->
+        <!-- <footer class="main-footer">footer</footer> -->
+        <!-- footer.html 추가 -->
+        <!-- <div th:replace="common/footer :: footer"></div> -->
+        <th:block th:replace="~{common/footer}">footer.html</th:block>         
+
+        <!-- confirm-alert-message window 창: footer.html에서 이미 declared 됐음 -->
+        <!-- <script th:inline="javascript">
+            const message = /*[[${message}]]*/ "전달 받은 message";
+
+            console.log(message)
+
+            if (message != null) alert(message);
+
+        </script> -->
+
+        <!-- 우측 상단 로그인 멤버 정보/ Notification 표시: 잠시 turn-off -->
+        <script th:src="@{/js/main.js}"></script>
+
+
+        <!-- 로그인 정보 JS 변수 (모든 페이지에서 공통으로 렌더링됨): header.html에서 이미 declared 됐음 -->
+        <!-- <script th:inline="javascript">
+            const notificationLoginCheck = /*[[${session.loginMember} ? true : false]]*/ false;
+            const notificationDefaultImage = /*[[@{/images/common/user.svg}]]*/ "/images/common/user.svg";
+        </script> -->
+
+    </div>
+    
+    <!--------------------------------------- sockjs를 이용한 WebSocket 구현을 위해 라이브러리 추가 ---------------------------------------------->
+    <!-- JS콘솔창에 sse오류가 너무떠서 잠시 turn-off...해두자... -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+    <script th:inline="javascript">
+        // 로그인한 회원 번호를 전역변수로 선언 -> 아래에 링크된 chatting.js에서 사용 
+        // ==> 챗봇의 경우는 loginMemberNo ==11, memberNickname='나챗봇'으로 고정되어 있다.
+        const loginMemberNo = /*[[${session.loginMember.memberNo}]]*/ "로그인한 회원 번호";
+
+        const memberNickname = /*[[${session.loginMember.memberNickname}]]*/ "로그인한 회원 닉네임";
+    </script>
+
+    <script th:src="@{/js/chatbot/chatbotManager.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+/* 전체 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans KR", sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* 중앙에 있는 로그인 컨테이너 */
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  /* 로그인 박스 */
+  .login-area {
+    width: 420px;
+    background-color: #ffffff;
+    padding: 50px 45px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  /* 로고 */
+  .logo-area {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 35px;
+  }
+  
+  .logo-img {
+    width: 240px;
+  }
+  
+  /* 공통 스타일 */
+  .input-id,
+  .input-pw {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid #d6d6d6;
+    outline: none;
+    transition: all 0.25s ease;
+  }
+  
+  .input-id:focus,
+  .input-pw:focus {
+    border-color: #1c2c44;
+    box-shadow: 0 0 6px rgba(28, 44, 68, 0.3);
+  }
+  
+  /* 입력창 영역 */
+  .id-section,
+  .pw-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  /* 체크박스 영역 */
+  .checkbox-area {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 10px 0 30px 5px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* 로그인 버튼 */
+  #login-Btn {
+    width: 100%;
+    height: 52px;
+    background-color: #1c2c44;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* 회원가입 버튼 */
+  #signUp-btn {
+    width: 100%;
+    height: 48px;
+    margin-top: 15px;
+    border-radius: 10px;
+    color: #1c2c44;
+    background-color: white;
+    border: 1.5px solid #1c2c44;
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  /* 버튼 (똑같이 생겨서 공통으로 관리) */
+  .login-btn-area,
+  .signUp-btn-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

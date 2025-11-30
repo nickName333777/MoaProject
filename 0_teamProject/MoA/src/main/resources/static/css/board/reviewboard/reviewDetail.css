@@ -1,0 +1,280 @@
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: #f8f9fb;
+  margin: 0;
+}
+
+.review-detail {
+  background: #ffffff;
+  width: 100%;
+  padding: 40px 60px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #27374d;
+  text-align: center;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
+}
+
+.review-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.poster {
+  width: 120px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.review-text {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.review-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+.stars {
+  color: gold;
+  font-size: 20px;
+  margin-top: 8px;
+}
+
+.review-stats {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #666;
+}
+
+.user-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.review-box {
+  background-color: #f9fafc;
+  border-radius: 8px;
+  padding: 25px;
+  margin-top: 30px;
+  border: 1px solid #ddd;
+  min-height: 200px;
+}
+
+.review-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: 600;
+  color: #27374d;
+}
+
+.date {
+  font-size: 13px;
+  color: #888;
+}
+
+.review-text-content {
+  color: #444;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.review-images {
+  margin-top: 40px;
+}
+
+.sub-title {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.image-list {
+  display: flex;
+  gap: 10px;
+}
+
+.image-list img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* 버튼 */
+.btn-area {
+  text-align: right;
+  margin-top: 25px;
+}
+
+.back-btn {
+  background-color: #27374d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.back-btn:hover {
+  background-color: #435b7d;
+}
+
+/* 댓글 섹션 */
+.comment-section {
+  margin-top: 40px;
+}
+
+.comment-section h3 {
+  font-size: 18px;
+  color: #27374d;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.comment-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.comment-box {
+  flex: 1;
+}
+
+.comment-user {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #27374d;
+}
+
+.comment-text {
+  font-size: 14px;
+  color: #444;
+}
+
+.comment-input {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.comment-input textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
+.submit-btn {
+  background-color: #27374d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  width: fit-content;
+  align-self: flex-end;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.btn-area button {
+  background-color: #27374d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-area button:hover {
+  background-color: #435b7d;
+}
+
+.comment-btn-area .comment-update-btn {
+  background: linear-gradient(135deg, #3c5a99, #27374d);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.comment-btn-area .comment-update-btn:hover {
+  background: linear-gradient(135deg, #4b6ab8, #324c6a);
+  transform: translateY(-2px);
+}
+
+.comment-btn-area .comment-delete-btn {
+  background: linear-gradient(135deg, #e04e4e, #c13a3a);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.comment-btn-area .comment-delete-btn:hover {
+  background: linear-gradient(135deg, #f25f5f, #d14343);
+  transform: translateY(-2px);
+}
+
+.show-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #27374d;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.review-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #27374d;
+}

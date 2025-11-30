@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.og.api.model.dao.PmMapper">
+
+
+	<!-- 이미지 리스트 삽입 -->
+	<insert id="insertBoardImgList">
+		INSERT INTO BOARD_IMG (
+			IMG_NO, IMG_PATH, IMG_ORDER, BOARD_NO
+		)
+		SELECT SEQ_BOARD_IMG_NO.NEXTVAL, A.IMG_PATH, A.IMG_ORDER, A.BOARD_NO
+		FROM(
+			<foreach collection="list" item="img" separator="UNION ALL">
+				SELECT #{img.imgPath} IMG_PATH,
+					   #{img.imgOrder} IMG_ORDER,
+					   #{img.boardNo} BOARD_NO
+				FROM DUAL
+			</foreach>
+		) A
+	</insert>
+	
+	<!-- 가격 리스트 삽입 -->
+	<insert id="insertPmPriceList">
+		INSERT INTO PM_PRICE_LIST (
+			PM_PRICE_TYPE, PM_PRICE, BOARD_NO
+		)
+		SELECT A.PM_PRICE_TYPE, A.PM_PRICE, A.BOARD_NO
+		FROM (
+			<foreach collection="list" item="pri" separator="UNION ALL">
+				SELECT #{pri.pmPriceType} PM_PRICE_TYPE,
+					   #{pri.pmPrice} PM_PRICE,
+					   #{pri.boardNo} BOARD_NO
+				FROM DUAL
+			</foreach>
+		) A
+	</insert>
+	
+	<!-- 공연 정보 삽입 (BOARD) -->
+	<insert id="insertBoard" parameterType="PerformanceBoard" useGeneratedKeys="true">
+		
+		<selectKey order="BEFORE" resultType="_int" keyProperty="boardNo">
+            SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO BOARD (
+        	BOARD_NO, BOARD_TITLE, B_CREATE_DATE, BOARD_COUNT, BOARD_DEL_FL, COMMUNITY_CODE
+        ) VALUES (
+        	${boardNo}, #{boardTitle}, TO_DATE(#{bCreateDate}, 'YYYY.MM.DD HH24:MI:SS'), 0, 'N', 4
+        )
+	</insert>
+	
+	<!-- 공연 시설 중복 체크 -->
+	<select id="selectHouseNoDup" resultType="_int">
+		SELECT PM_HOUSE_NO
+		FROM PM_HOUSE
+		WHERE PM_HOUSE_NAME = #{pmHouseName}
+		AND PM_HOUSE_ADDRESS = #{pmHouseAddress}
+	</select>
+	
+	<!-- 공연 시설 삽입 -->
+	<insert id="insertPMHouse" parameterType="PerformanceBoard" useGeneratedKeys="true" keyProperty="pmHouseNo">
+		
+		<selectKey order="BEFORE" resultType="_int" keyProperty="pmHouseNo">
+			SELECT SEQ_HOUSE_NO.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO PM_HOUSE (
+			PM_HOUSE_NO, PM_HOUSE_NAME, PM_HOUSE_ADDRESS, PM_HOUSE_LAT, PM_HOUSE_LONG, PM_HOUSE_WEBSITE, PM_HOUSE_HOME
+		) VALUES (
+			#{pmHouseNo},
+			#{pmHouseName},
+			#{pmHouseAddress},
+			#{pmHouseLat},
+			#{pmHouseLong},
+			#{pmHouseWebsite},
+			#{pmHouseHome}
+		)
+	</insert>
+	
+	<!-- 공연 정보 삽입 -->
+	<insert id="insertPM" parameterType="PerformanceBoard">
+		INSERT INTO PM (
+			BOARD_NO, GENRE_NO, PM_START_TIME, PM_END_TIME, PM_PLAYTIME, PM_HOUSE_NO
+		)
+		VALUES (
+			#{boardNo},
+			<choose>
+				<when test='genreName == "연극"'>
+		    		1
+		    	</when>
+		    	
+		    	<when test='genreName == "뮤지컬"'>
+		    		2
+		    	</when>
+		    	<when test='genreName == "대중음악" or genreName == "한국음악(국악)" or genreName == "서양음악(클래식)"'>
+		    		3
+		    	</when>
+		    	<when test='genreName == "무용(서양/한국무용)" or genreName == "대중무용"'>
+		    		4
+		    	</when>
+		    	<when test='genreName == "서커스/마술"'>
+		    		5
+		    	</when>
+		    	<when test='genreName == "복합"'>
+		    		6
+		    	</when>
+			</choose>,
+			TO_DATE(#{pmStartTime}, 'YYYY.MM.DD'),
+			TO_DATE(#{pmEndTime}, 'YYYY.MM.DD'),
+			#{pmPlaytime},
+			#{pmHouseNo}
+		)
+	</insert>
+	
+	
+	
+	
+</mapper>

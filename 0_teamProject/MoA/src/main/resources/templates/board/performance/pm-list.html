@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공연 페이지 장르별 목록 조회</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script src="https://kit.fontawesome.com/ce1a8d8e36.js" crossorigin="anonymous"></script>
+    <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../../../static/css/main-style.css"> -->
+    <!-- 임시 -->
+    <link rel="stylesheet" th:href="@{/css/board/performance/performance-type-list-style.css}">
+
+    <link rel="stylesheet" href="../../../static/css/board/performance/performance-type-list-style.css">
+    <link rel="stylesheet" th:href="@{/css/board/performance/pm-nav.css}">
+
+
+</head>
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    
+    <main>
+
+        <th:block th:replace="~{/common/header}">header.html</th:block>
+
+        <th:block th:replace="~{board/performance/pm-nav}"></th:block>
+        
+        <!-- 목록 메인 화면 -->
+        <section class="pm-view-main">
+            
+            <form th:action="${communityCode}" method="get" id="pmListSearch">
+                <!-- 장르 선택 네비게이션 바-->
+                <ul class="nav nav-pills justify-content-center" id="typeList">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/board/4/pmTypeList(type='all')}">전체</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='1')}">연극</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='2')}">뮤지컬</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='3')}">음악</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='4')}">무용</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='5')}">서커스/마술</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='6')}">복합</a>
+                    </li>
+                </ul>
+            </form>
+
+            <!-- 목록 결과 화면 -->
+            <th:block th:replace="~{board/performance/pm-list-result}"></th:block>
+
+
+        </section>
+
+        <th:block th:replace="~{/common/footer}">footer.html</th:block>
+    </main>
+
+    <!-- 임시 -->
+    <script th:src="@{/js/board/performance/performance-type-list.js}"></script>
+</body>
+</html>

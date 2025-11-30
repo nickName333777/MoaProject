@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/member/signUp.css}">
+    <link rel="stylesheet" th:href="@{/css/main-style.css}">
+
+</head>
+<body>
+
+
+    
+    <main>
+
+        <th:block th:replace="~{/common/header}">header.html</th:block>
+        
+        <div class="blank"></div>
+
+        <div id="sign"><span></span>
+                        <span class="span-center">회원가입</span>
+                        <span></span>
+                        
+        </div>
+        <section class="signUp-content">
+
+            <form th:action="@{/member/signUp}" id="signFrm" method="POST">
+
+
+    
+                <section class="center">
+    
+                    <div class="id-top">아이디 <span>*</span></div>
+        
+                    <input type="text" name="memberId" id="memberId" class="id-input" placeholder="아이디를 입력해주세요" maxlength="30" autocomplete="off" >
+        
+                    <div class="id-bottom" id="idMessage">유효한 아이디를 입력해주세요</div>
+    
+                </section>
+    
+                
+                <section>
+    
+                    
+                    <div class="pw-top">비밀번호 <span>*</span></div>
+        
+                    <input type="password" name="memberPw" id="memberPw" class="pw-input" placeholder="비밀번호를 입력해주세요" maxlength="500" autocomplete="off" >
+        
+                    <div class="pw-bottom" id="pwMessage">유효한 비밀번호를 입력해주세요</div>
+    
+                </section>
+    
+    
+    
+                <section>
+    
+                    <div class="pwcon-top">비밀번호 확인 <span>*</span></div>
+        
+                    <input type="password" name="memberPwConfirm" id="memberPwConfirm" class="pwcon-input" placeholder="비밀번호 확인을 입력해주세요" maxlength="500" autocomplete="off" >
+        
+                    <div class="pwcon-bottom" id="pwConfirmMessage">유효한 비밀번호 확인을 입력해주세요</div>
+    
+                </section>
+    
+    
+                <section>
+    
+    
+                    <div class="email-top">이메일 <span>*</span></div>
+        
+                    <input type="text" name="memberEmail" id="memberEmail" class="email-input" placeholder="이메일을 입력해주세요" maxlength="50" autocomplete="off" >
+        
+                    <div class="email-bottom" id="emailMessage">유효한 이메일을 입력해주세요</div>
+    
+                </section>
+    
+    
+                <section>
+    
+                    <div class="nick-top">닉네임 <span>*</span></div>
+        
+                    <input type="text" name="memberNickname" id="memberNickname" class="nick-input" placeholder="닉네임을 입력해주세요" maxlength="30" autocomplete="off" >
+        
+                    <div class="nick-bottom" id="nickMessage">유효한 닉네임을 입력해주세요</div>
+    
+                </section>
+    
+    
+                <section>
+    
+                    <div class="tel-top">전화번호 <span>*</span></div>
+        
+                    <input type="text" name="memberTel" id="memberTel" class="tel-input" placeholder="전화번호를 입력해주세요" maxlength="30" autocomplete="off">
+        
+                    <div class="tel-bottom" id="telMessage">유효한 전화번호를 입력해주세요</div>
+    
+                </section>
+    
+                <section>
+    
+                    <div class="addr-top">주소 <input type="button" class="addr-Btn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></div>
+        
+                    <input type="text" class="addr-input" name="memberAddr" id="sample6_postcode" placeholder="우편번호">
+                    <br>
+                    <input type="text" class="addr-input" name="memberAddr" id="sample6_address" placeholder="주소"><br>
+                    <input type="text" class="addr-input" name="memberAddr" id="sample6_detailAddress" placeholder="상세주소">
+
+    
+
+
+                </section>
+    
+    
+                <div>
+    
+                    <button type="submit" id="sign-Btn">가입하기</button>
+    
+                </div>
+
+            </form>
+            
+            
+
+
+            
+        </section>
+        
+    
+
+    
+        
+
+
+
+    </main>
+
+
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
+</script>
+
+
+
+        
+
+    <div th:replace="~{common/footer :: footer}"></div>
+
+    <script th:src="@{/js/member/signUp.js}"></script>
+
+
+
+
+
+
+    
+</body>
+</html>
