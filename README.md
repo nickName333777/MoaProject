@@ -24,3 +24,8 @@ KDT  빅데이터 분석 & Java 웹개발 과정 중간 프로젝트
 <img width="614" height="720" alt="image" src="https://github.com/user-attachments/assets/1c72b900-d785-4a9e-be92-5879a5e35cf2" />
 
 
+< 전시DB 생성 >
+1. Oracle DB 사용자 계정 설정
+2. MoA_team_integRev_20251018.sql 실행
+3. 앱 실행 후 주소창에 요청주소 “/board/exhibition/jsonToDatabaseInsert” 입력 후 Enter.
+
