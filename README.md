@@ -14,4 +14,4 @@ KDT  빅데이터 분석 & Java 웹개발 과정 중간 프로젝트
 
 - 개발환경(사용도구/언어): HTML, CSS, JS, VSCODE, Docker, STS4 IDE, Spring Boot, Oracle, Figma, Github, Java, Python
 
-- 담당 역할: 전시게시판을 담당하여, 공공 데이터를 수집하여 전시 DB구축하고, 전시게시판 전시목록/상세조회/새글작성/수정/삭제 CRUD 구현.
+- 담당 역할: 전시게시판을 담당 - 공공 데이터를 수집하여 전시 DB구축하고, 전시게시판 전시목록/상세조회/새글작성/수정/삭제 CRUD 구현.
