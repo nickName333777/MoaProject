@@ -27,5 +27,5 @@ KDT  빅데이터 분석 & Java 웹개발 과정 중간 프로젝트
 < 전시DB 생성 ><br>
 1. Oracle DB 사용자 계정 설정<br>
 2. MoA_team_integRev_20251018.sql 실행<br>
-3. 앱 실행 후 주소창에 요청주소 “/board/exhibition/jsonToDatabaseInsert” 입력 후 Enter.<br>
+3. 앱 실행 후 주소창에 요청주소 “localhost:9091/board/exhibition/jsonToDatabaseInsert” 입력 후 Enter.<br>
 
